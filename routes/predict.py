@@ -4,6 +4,7 @@ from utils.security import require_api_key
 from services.xyp import Service
 predict_bp = Blueprint("predict", __name__)
 from config import ACCESS_TOKEN, KEY_PATH
+from zeep.helpers import serialize_object
 # Example GET route with hardcoded features
 @predict_bp.route("/predict", methods=["GET"])
 # @require_api_key()
@@ -99,9 +100,10 @@ def getVehicle():
         )
     
         res = citizen.dump('WS100401_getVehicleInfo', params).response
+        res_dict = serialize_object(res)
 
-        print("📥 Response:", res)
-        return jsonify({"data": res}), 200
+        print("📥 Serialized Response:", res_dict)
+        return jsonify({"data": res_dict})
 
     except Exception as e:
         print("getVehicle error:", str(e))
