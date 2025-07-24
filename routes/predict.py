@@ -2,7 +2,6 @@ from flask import Blueprint, request, jsonify, abort
 from services.prediction import predict
 from utils.security import require_api_key
 from services.xyp import getVehicle
-import asyncio
 predict_bp = Blueprint("predict", __name__)
 
 # Example GET route with hardcoded features
@@ -34,13 +33,13 @@ def predict_get():
 # POST route that takes input from client
 @predict_bp.route("/predict/car", methods=["POST"])
 # @require_api_key()
-async def predict_post():
+def predict_post():
     try:
         body = request.get_json()
         if not body:
             abort(400, description="Invalid or missing JSON body")
         print(body.get('num'))
-        vehicle = await getVehicle(body.get('num'))  # optional, if used
+        vehicle =getVehicle(body.get('num'))  # optional, if used
 
         features = {
             'brand': body.get('brand'),
