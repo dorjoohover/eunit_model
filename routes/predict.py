@@ -93,7 +93,7 @@ def getVehicle():
 
         res = citizen.dump('WS100401_getVehicleInfo', params)
         print("📥 Response:", res)
-        return res
+        return jsonify({res})
 
     except Exception as e:
         print(f"getVehicle error:", str(e))
