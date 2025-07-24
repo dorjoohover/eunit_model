@@ -74,18 +74,31 @@ class Service:
 
 
 def getVehicle(arg: str = ''):
+    try:
+        params = {
+            "auth": None,
+            "cabinNumber": None,
+            "certificatNumber": None,
+            "regnum": None,
+        }
+        # арг 7 оронтой бол plates, урт бол гэрчилгээ
+        if len(arg) <= 7:
+            params.update({'plateNumber': arg})
+        else:
+            params.update({'certificateNumber': arg})
 
-    params = {
-        "auth": None,
-        "cabinNumber": None,
-        "certificatNumber": None,
-        "regnum": None,
-    }
-    params.update({'plateNumber': arg}) if len(
-        arg) <= 7 else params.update({'certificateNumber': arg})
-    print(params)
-    citizen = Service('https://xyp.gov.mn/transport-1.3.0/ws?WSDL',
-                      access_token, key_path)
-    res = citizen.dump('WS100401_getVehicleInfo', params)
-    print(res)
-    return res
+        print("📤 Params:", params)
+
+        citizen = Service(
+            'https://xyp.gov.mn/transport-1.3.0/ws?WSDL',
+            access_token,
+            key_path
+        )
+
+        res = citizen.dump('WS100401_getVehicleInfo', params)
+        print("📥 Response:", res)
+        return res
+
+    except Exception as e:
+        print(f"getVehicle error:", str(e))
+        return None
