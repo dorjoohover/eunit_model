@@ -98,9 +98,9 @@ def getVehicle():
             KEY_PATH
         )
     
-        res = citizen.dump('WS100401_getVehicleInfo', params)
+        res = citizen.dump('WS100401_getVehicleInfo', params).response
 
-        print("📥 Response:", res.response)
+        print("📥 Response:", res)
         return jsonify({"data": res}), 200
 
     except Exception as e:
