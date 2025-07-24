@@ -63,3 +63,17 @@ def predict_post():
 
     except Exception as e:
         abort(500, description=str(e))
+@predict_bp.route("/predict/vehicle", methods=["POST"])
+# @require_api_key()
+def predict_post():
+    try:
+        body = request.get_json()
+        if not body:
+            abort(400, description="Invalid or missing JSON body")
+        print(body.get('num'))
+        vehicle =getVehicle(body.get('num'))  
+        
+        return jsonify({"prediction": vehicle}), 200
+
+    except Exception as e:
+        abort(500, description=str(e))
