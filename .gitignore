@@ -1,0 +1,58 @@
+# Python virtual environment
+venv/
+ENV/
+env/
+
+# Byte-compiled / cache
+__pycache__/
+*/__pycache__/
+*.py[cod]
+*.pyo
+
+# Distribution / packaging
+*.egg-info/
+*.egg
+*.whl
+dist/
+build/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Logs
+*.log
+
+# Environment variables
+.env
+*.env
+
+# IDE/editor configs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Docker artifacts
+dockerfile
+*.dockerfile
+*.img
+
+# Models / large binaries
+model/
+*.h5
+*.pkl
+*.joblib
+
+# Test / coverage
+htmlcov/
+.coverage
+.tox/
+.pytest_cache/
+.cache/
+
+# pip
+pip-log.txt
