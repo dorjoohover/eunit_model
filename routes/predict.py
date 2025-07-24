@@ -39,8 +39,8 @@ def predict_post():
         if not body:
             abort(400, description="Invalid or missing JSON body")
         print(body.get('num'))
-        vehicle =getVehicle(body.get('num'))  
-        print(vehicle)
+        # vehicle =getVehicle(body.get('num'))  
+        # print(vehicle)
         features = {
             'brand': body.get('brand'),
             'mark': body.get('mark'),
@@ -93,7 +93,7 @@ def getVehicle():
 
         res = citizen.dump('WS100401_getVehicleInfo', params)
         print("📥 Response:", res)
-        return jsonify({res})
+        return jsonify({"data": res})
 
     except Exception as e:
         print(f"getVehicle error:", str(e))
