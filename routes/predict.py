@@ -87,8 +87,8 @@ def getVehicle():
 
         citizen = Service(
             'https://xyp.gov.mn/transport-1.3.0/ws?WSDL',
-            accesstoken=ACCESS_TOKEN,
-            key_path =KEY_PATH
+            ACCESS_TOKEN,
+            KEY_PATH
         )
 
         res = citizen.dump('WS100401_getVehicleInfo', params)
