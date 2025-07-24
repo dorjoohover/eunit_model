@@ -5,6 +5,8 @@ from services.xyp import Service
 predict_bp = Blueprint("predict", __name__)
 from config import ACCESS_TOKEN, KEY_PATH
 from zeep.helpers import serialize_object
+from datetime import datetime 
+from utils.transformers import fuel_values 
 # Example GET route with hardcoded features
 @predict_bp.route("/predict", methods=["GET"])
 # @require_api_key()
@@ -40,23 +42,30 @@ def predict_post():
         if not body:
             abort(400, description="Invalid or missing JSON body")
         print(body.get('num'))
-        # vehicle =getVehicle(body.get('num'))  
-        # print(vehicle)
+        vehicle =getVehicle(body.get('num'))  
+        print(vehicle)
+        
+     
+        brand, mark, capacity, buildYear = vehicle.markName, vehicle.modelName, round(int(str(vehicle.capacity))), vehicle.buildYear
+        importedDate = datetime.strptime(str(vehicle.importDate), "%a, %d %b %Y %H:%M:%S %Z").year
+        khurd = 'Буруу' if vehicle.wheelPosition == 'Баруун' else 'Зөв' 
+        color = vehicle.colorName
+        engine = fuel_values(vehicle.fueltype)
         features = {
-            'brand': body.get('brand'),
-            'mark': body.get('mark'),
-            'Engine_capacity': body.get('Engine_capacity'),
-            'Year_of_manufacture': body.get('Year_of_manufacture'),
-            'Year_of_entry': body.get('Year_of_entry'),
-            'Gearbox': body.get('Gearbox'),
-            'Hurd': body.get('Hurd'),
-            'Type': body.get('Type'),
-            'Color': body.get('Color'),
-            'Engine': body.get('Engine'),
-            'Interior_color': body.get('Interior_color'),
-            'Drive': body.get('Drive'),
-            'Mileage': body.get('Mileage'),
-            'Conditions': body.get('Conditions')
+            'brand': brand,
+            'mark': mark,
+            'Engine_capacity':capacity ,
+            'Year_of_manufacture': buildYear,
+            'Year_of_entry': importedDate,
+            'Gearbox': None,
+            'Hurd': khurd,
+            'Type': None,
+            'Color': color,
+            'Engine': engine,
+            'Interior_color': None,
+            'Drive': None,
+            'Mileage': None,
+            'Conditions': None
         }
 
         result = predict(features)
@@ -65,8 +74,8 @@ def predict_post():
     except Exception as e:
         abort(500, description=str(e))
 
-@predict_bp.route("/predict/vehicle", methods=["POST"])
-def getVehicle():
+# @predict_bp.route("/predict/vehicle", methods=["POST"])
+def getVehicle(arg: str = ''):
     body = request.get_json()
     if not body:
         abort(400, description="Invalid or missing JSON body")
