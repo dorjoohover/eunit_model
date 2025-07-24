@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify, abort
 from services.prediction import predict
 from utils.security import require_api_key
 from services.xyp import getVehicle
-
+import asyncio
 predict_bp = Blueprint("predict", __name__)
 
 # Example GET route with hardcoded features
