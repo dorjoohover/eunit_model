@@ -1,9 +1,9 @@
 from flask import Blueprint, request, jsonify, abort
 from services.prediction import predict
 from utils.security import require_api_key
-from services.xyp import getVehicle
+from services.xyp import Service
 predict_bp = Blueprint("predict", __name__)
-
+from config import ACCESS_TOKEN, KEY_PATH
 # Example GET route with hardcoded features
 @predict_bp.route("/predict", methods=["GET"])
 # @require_api_key()
@@ -64,16 +64,37 @@ def predict_post():
     except Exception as e:
         abort(500, description=str(e))
 @predict_bp.route("/predict/vehicle", methods=["POST"])
-# @require_api_key()
-def predict_vehicle():
+
+def getVehicle():
+    body = request.get_json()
+    if not body:
+        abort(400, description="Invalid or missing JSON body")
+    arg =  body.get('num')
     try:
-        body = request.get_json()
-        if not body:
-            abort(400, description="Invalid or missing JSON body")
-        print(body.get('num'))
-        vehicle =getVehicle(body.get('num'))  
-        
-        return jsonify({"prediction": vehicle}), 200
+        params = {
+            "auth": None,
+            "cabinNumber": None,
+            "certificatNumber": None,
+            "regnum": None,
+        }
+        # арг 7 оронтой бол plates, урт бол гэрчилгээ
+        if len(arg) <= 7:
+            params.update({'plateNumber': arg})
+        else:
+            params.update({'certificateNumber': arg})
+
+        print("📤 Params:", params)
+
+        citizen = Service(
+            'https://xyp.gov.mn/transport-1.3.0/ws?WSDL',
+            accesstoken=ACCESS_TOKEN,
+            key_path =KEY_PATH
+        )
+
+        res = citizen.dump('WS100401_getVehicleInfo', params)
+        print("📥 Response:", res)
+        return res
 
     except Exception as e:
-        abort(500, description=str(e))
+        print(f"getVehicle error:", str(e))
+        return None

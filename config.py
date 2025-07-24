@@ -13,3 +13,7 @@ PORT       = int(os.getenv("PORT", 80))
 
 # simple API-key for requests
 API_KEY    = os.getenv("API_KEY", "changeme123")
+
+
+KEY_PATH = os.getenv("KEY_PATH", '')
+ACCESS_TOKEN = os.getenv('ACCESS_TOKEN')

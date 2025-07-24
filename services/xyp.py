@@ -9,11 +9,8 @@ from base64 import b64encode
 from Crypto.Hash import SHA256
 from Crypto.Signature import PKCS1_v1_5
 from Crypto.PublicKey import RSA
-from dotenv import load_dotenv
 
-load_dotenv()
-key_path = os.getenv("KEY_PATH")
-access_token = os.getenv('ACCESS_TOKEN')
+
 
 
 class XypSign:
@@ -73,32 +70,3 @@ class Service:
             print(operation, str(e))
 
 
-def getVehicle(arg: str = ''):
-    try:
-        params = {
-            "auth": None,
-            "cabinNumber": None,
-            "certificatNumber": None,
-            "regnum": None,
-        }
-        # арг 7 оронтой бол plates, урт бол гэрчилгээ
-        if len(arg) <= 7:
-            params.update({'plateNumber': arg})
-        else:
-            params.update({'certificateNumber': arg})
-
-        print("📤 Params:", params)
-
-        citizen = Service(
-            'https://xyp.gov.mn/transport-1.3.0/ws?WSDL',
-            access_token,
-            key_path
-        )
-
-        res = citizen.dump('WS100401_getVehicleInfo', params)
-        print("📥 Response:", res)
-        return res
-
-    except Exception as e:
-        print(f"getVehicle error:", str(e))
-        return None
