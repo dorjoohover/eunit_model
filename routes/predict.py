@@ -67,6 +67,7 @@ def predict_post():
             'Mileage': None,
             'Conditions': None
         }
+        print(features)
 
         result = predict(features)
         return jsonify({"prediction": result}), 200
