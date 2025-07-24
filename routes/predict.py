@@ -39,8 +39,8 @@ def predict_post():
         if not body:
             abort(400, description="Invalid or missing JSON body")
         print(body.get('num'))
-        vehicle =getVehicle(body.get('num'))  # optional, if used
-
+        vehicle =getVehicle(body.get('num'))  
+        print(vehicle)
         features = {
             'brand': body.get('brand'),
             'mark': body.get('mark'),
