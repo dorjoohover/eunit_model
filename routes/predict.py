@@ -97,7 +97,7 @@ def getVehicle():
             ACCESS_TOKEN,
             KEY_PATH
         )
-
+    
         res = citizen.dump('WS100401_getVehicleInfo', params)
         print("📥 Response:", res)
         return jsonify({"data": res}), 200
