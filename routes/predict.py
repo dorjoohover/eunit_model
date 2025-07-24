@@ -34,13 +34,13 @@ def predict_get():
 # POST route that takes input from client
 @predict_bp.route("/predict/car", methods=["POST"])
 # @require_api_key()
-def predict_post():
+async def predict_post():
     try:
         body = request.get_json()
         if not body:
             abort(400, description="Invalid or missing JSON body")
         print(body.get('num'))
-        vehicle = getVehicle(body.get('num'))  # optional, if used
+        vehicle = await getVehicle(body.get('num'))  # optional, if used
 
         features = {
             'brand': body.get('brand'),
