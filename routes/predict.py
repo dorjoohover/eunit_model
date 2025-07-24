@@ -65,7 +65,7 @@ def predict_post():
         abort(500, description=str(e))
 @predict_bp.route("/predict/vehicle", methods=["POST"])
 # @require_api_key()
-def predict_post():
+def predict_vehicle():
     try:
         body = request.get_json()
         if not body:
