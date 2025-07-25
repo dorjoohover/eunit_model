@@ -42,7 +42,7 @@ def predict_post():
         if not body:
             abort(400, description="Invalid or missing JSON body")
         print(body.get('num'))
-        vehicle =getVehicle(body.get('num'))  
+        vehicle =getVehicle(body.get('num')).data
         print(vehicle)
         
      
@@ -97,7 +97,6 @@ def getVehicle(arg: str = ''):
         else:
             params.update({'certificateNumber': arg})
 
-        print("📤 Params:", params)
 
         # ACCESS_TOKEN, KEY_PATH - үнэн эсэхийг шалгах
         if not ACCESS_TOKEN or not KEY_PATH:
@@ -112,7 +111,6 @@ def getVehicle(arg: str = ''):
         res = citizen.dump('WS100401_getVehicleInfo', params).response
         res_dict = serialize_object(res)
 
-        print("📥 Serialized Response:", res_dict)
         return jsonify({"data": res_dict})
 
     except Exception as e:
