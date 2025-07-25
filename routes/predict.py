@@ -42,15 +42,15 @@ def predict_post():
         if not body:
             abort(400, description="Invalid or missing JSON body")
         print(body.get('num'))
-        vehicle =getVehicle(body.get('num')).data
+        vehicle =getVehicle(body.get('num'))
         print(vehicle)
         
      
-        brand, mark, capacity, buildYear = vehicle.markName, vehicle.modelName, round(int(str(vehicle.capacity))), vehicle.buildYear
-        importedDate = datetime.strptime(str(vehicle.importDate), "%a, %d %b %Y %H:%M:%S %Z").year
-        khurd = 'Буруу' if vehicle.wheelPosition == 'Баруун' else 'Зөв' 
-        color = vehicle.colorName
-        engine = fuel_values(vehicle.fueltype)
+        brand, mark, capacity, buildYear = vehicle.get('markName'), vehicle.get('modelName'), round(int(str(vehicle.get('capacity')))), vehicle.get('buildYear')
+        importedDate = datetime.strptime(str(vehicle.get('importDate')), "%a, %d %b %Y %H:%M:%S %Z").year
+        khurd = 'Буруу' if vehicle.get('wheelPosition') == 'Баруун' else 'Зөв' 
+        color = vehicle.get('colorName')
+        engine = fuel_values(vehicle.get('fueltype'))
         features = {
             'brand': brand,
             'mark': mark,
@@ -111,7 +111,7 @@ def getVehicle(arg: str = ''):
         res = citizen.dump('WS100401_getVehicleInfo', params).response
         res_dict = serialize_object(res)
 
-        return jsonify(res_dict)
+        return res_dict
 
     except Exception as e:
         print("getVehicle error:", str(e))
