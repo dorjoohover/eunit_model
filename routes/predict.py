@@ -69,6 +69,7 @@ def predict_post():
             'Conditions': None
         }
         print(features)
+        return features
         result = predict(features)
         return jsonify({"prediction": result}), 200
 
