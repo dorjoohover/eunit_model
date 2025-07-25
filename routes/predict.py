@@ -111,7 +111,7 @@ def getVehicle(arg: str = ''):
     
         res = citizen.dump('WS100401_getVehicleInfo', params).response
         res_dict = serialize_object(res)
-
+        print(res_dict)
         return res_dict
 
     except Exception as e:
