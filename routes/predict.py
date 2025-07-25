@@ -71,7 +71,7 @@ def predict_post():
         print(features)
         # return features
         result = predict(features)
-        return jsonify({"prediction": result}), 200
+        return jsonify({"prediction": result, "vehicle": vehicle}), 200
 
     except Exception as e:
         print(e)

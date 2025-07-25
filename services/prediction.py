@@ -26,16 +26,11 @@ condition_mapping = {
 _model = None
 _median = None
 _data = None
-import openpyxl
-wb = openpyxl.load_workbook(MEDIAN_PATH)
-print(wb.sheetnames)
 def load_median_data():
     global _median
     try:
         if _median is None:
-            print('load')
             _median = pd.read_excel(MEDIAN_PATH)
-        print(_median)
         mileage_to_price_change = dict(
             zip(
                 _median["Км-ийн өсөлт"].astype(str),
