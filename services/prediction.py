@@ -4,8 +4,7 @@ import joblib
 import numpy as np
 import pandas as pd
 import logging
-import os
-
+import sklearn.compose._column_transformer
 from config import MODEL_PATH, MEDIAN_PATH, DATA_PATH
 
 import warnings
@@ -60,7 +59,7 @@ def load_model():
     if _model is None:
         try:
             # Patch for backward compatibility
-            import sklearn.compose._column_transformer
+            # import sklearn.compose._column_transformer
             class _RemainderColsList(list):
                 pass
             sklearn.compose._column_transformer._RemainderColsList = _RemainderColsList
