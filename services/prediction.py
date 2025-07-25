@@ -59,6 +59,7 @@ def load_model():
     if _model is None:
         try:
             _model = joblib.load(MODEL_PATH)
+            print(_model)
             logger.info("✅ Model loaded successfully.")
         except Exception as e:
             logger.error(f"❌ Error loading model: {str(e)}")
