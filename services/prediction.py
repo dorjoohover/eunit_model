@@ -4,12 +4,13 @@ import joblib
 import numpy as np
 import pandas as pd
 import logging
-import sklearn.compose._column_transformer
+import os
+
 from config import MODEL_PATH, MEDIAN_PATH, DATA_PATH
 
 import warnings
-# from sklearn.exceptions import InconsistentVersionWarning
-# warnings.simplefilter("ignore", InconsistentVersionWarning)
+from sklearn.exceptions import InconsistentVersionWarning
+warnings.simplefilter("ignore", InconsistentVersionWarning)
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
@@ -58,13 +59,17 @@ def load_model():
 
     if _model is None:
         try:
-            _model = joblib.load(MODEL_PATH)
-            print(_model)
-            logger.info("✅ Model loaded successfully.")
-        except Exception as e:
-            logger.error(f"❌ Error loading model: {str(e)}")
-            sys.exit(1)
+            # Patch for backward compatibility
+            import sklearn.compose._column_transformer
+            class _RemainderColsList(list):
+                pass
+            sklearn.compose._column_transformer._RemainderColsList = _RemainderColsList
 
+            _model = joblib.load(MODEL_PATH)
+            logger.info("Loaded model successfully")
+        except Exception as e:
+            logger.error(f"Error loading model: {str(e)}")
+            sys.exit(1)
     return _model
 
 def load_price_bins():
