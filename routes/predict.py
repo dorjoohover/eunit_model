@@ -42,7 +42,7 @@ def predict_post():
         if not body:
             abort(400, description="Invalid or missing JSON body")
         print(body.get('num'))
-        vehicle =getVehicle(body.get('num')).data
+        vehicle =getVehicle(body.get('num')).data.data
         print(vehicle)
         
      
@@ -111,7 +111,7 @@ def getVehicle(arg: str = ''):
         res = citizen.dump('WS100401_getVehicleInfo', params).response
         res_dict = serialize_object(res)
 
-        return jsonify({"data": res_dict})
+        return jsonify(res_dict)
 
     except Exception as e:
         print("getVehicle error:", str(e))
