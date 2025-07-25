@@ -46,10 +46,11 @@ def predict_post():
         print(vehicle)
         
      
-        brand, mark, capacity, buildYear = vehicle.get('markName'), vehicle.get('modelName'), round(int(str(vehicle.get('capacity')))), vehicle.get('buildYear')
+        brand, mark,  buildYear = vehicle.get('markName'), vehicle.get('modelName'),  vehicle.get('buildYear')
         importedDate = datetime.strptime(str(vehicle.get('importDate')), "%a, %d %b %Y %H:%M:%S %Z").year
         khurd = 'Буруу' if vehicle.get('wheelPosition') == 'Баруун' else 'Зөв' 
         color = vehicle.get('colorName')
+        capacity = round(float(str(vehicle.get('capacity')))) / 1000
         engine = fuel_values(vehicle.get('fueltype'))
         features = {
             'brand': brand,
