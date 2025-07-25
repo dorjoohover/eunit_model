@@ -42,7 +42,7 @@ def predict_post():
         if not body:
             abort(400, description="Invalid or missing JSON body")
         print(body.get('num'))
-        vehicle =getVehicle(body.get('num')).data.data
+        vehicle =getVehicle(body.get('num')).data
         print(vehicle)
         
      
