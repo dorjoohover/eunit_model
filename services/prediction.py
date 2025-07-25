@@ -30,30 +30,31 @@ _data = None
 def load_median_data():
     global _median
     try:
-        if(_median is None):
+        if _median is None:
             _median = pd.read_excel(MEDIAN_PATH)
-        
-        
+
         mileage_to_price_change = dict(
             zip(
                 _median["Км-ийн өсөлт"].astype(str),
                 _median["Үнийн өөрчлөлтийн хувь"],
             )
         )
+
         if "300000" not in mileage_to_price_change:
             mileage_to_price_change["300000"] = (
                 _median["Үнийн өөрчлөлтийн хувь"].iloc[-1]
                 if not _median.empty else -0.045
             )
+
         logger.info("Loaded median_data.xlsx successfully")
         return mileage_to_price_change
+
     except FileNotFoundError:
         logger.error("median_data.xlsx not found")
         sys.exit(1)
     except Exception as e:
         logger.error(f"Error loading median_data.xlsx: {str(e)}")
         sys.exit(1)
-
 def load_model():
     global _model
 
