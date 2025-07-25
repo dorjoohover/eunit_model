@@ -69,7 +69,7 @@ def predict_post():
             'Conditions': None
         }
         print(features)
-        return features
+        # return features
         result = predict(features)
         return jsonify({"prediction": result}), 200
 
@@ -109,7 +109,7 @@ def getVehicle(arg: str = ''):
             ACCESS_TOKEN,
             KEY_PATH
         )
-    
+        print(citizen)
         res = citizen.dump('WS100401_getVehicleInfo', params).response
         res_dict = serialize_object(res)
         print(res_dict)
