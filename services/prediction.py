@@ -58,17 +58,12 @@ def load_model():
 
     if _model is None:
         try:
-            # Patch for backward compatibility
-            # import sklearn.compose._column_transformer
-            class _RemainderColsList(list):
-                pass
-            sklearn.compose._column_transformer._RemainderColsList = _RemainderColsList
-
             _model = joblib.load(MODEL_PATH)
-            logger.info("Loaded model successfully")
+            logger.info("✅ Model loaded successfully.")
         except Exception as e:
-            logger.error(f"Error loading model: {str(e)}")
+            logger.error(f"❌ Error loading model: {str(e)}")
             sys.exit(1)
+
     return _model
 
 def load_price_bins():
