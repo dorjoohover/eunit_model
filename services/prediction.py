@@ -8,8 +8,8 @@ import sklearn.compose._column_transformer
 from config import MODEL_PATH, MEDIAN_PATH, DATA_PATH
 
 import warnings
-from sklearn.exceptions import InconsistentVersionWarning
-warnings.simplefilter("ignore", InconsistentVersionWarning)
+# from sklearn.exceptions import InconsistentVersionWarning
+# warnings.simplefilter("ignore", InconsistentVersionWarning)
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
