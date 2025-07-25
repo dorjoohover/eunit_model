@@ -31,6 +31,7 @@ def load_median_data():
     global _median
     try:
         if _median is None:
+            print('load')
             _median = pd.read_excel(MEDIAN_PATH)
         print(_median)
         mileage_to_price_change = dict(
