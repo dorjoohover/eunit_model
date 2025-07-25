@@ -32,7 +32,7 @@ def load_median_data():
     try:
         if _median is None:
             _median = pd.read_excel(MEDIAN_PATH)
-
+        print(_median)
         mileage_to_price_change = dict(
             zip(
                 _median["Км-ийн өсөлт"].astype(str),
