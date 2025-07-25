@@ -73,6 +73,7 @@ def predict_post():
         return jsonify({"prediction": result}), 200
 
     except Exception as e:
+        print(e)
         abort(500, description=str(e))
 
 # @predict_bp.route("/predict/vehicle", methods=["POST"])
