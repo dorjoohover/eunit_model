@@ -2,8 +2,10 @@ from flask import Flask
 from config import HOST, PORT, API_KEY
 from routes.health import health_bp
 from routes.predict import predict_bp
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 app.config["API_KEY"] = API_KEY
 
 # register blueprints
