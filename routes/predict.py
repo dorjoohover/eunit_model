@@ -1,13 +1,15 @@
+from utils.transformers import fuel_values
+from datetime import datetime
+from zeep.helpers import serialize_object
+from config import ACCESS_TOKEN, KEY_PATH
 from flask import Blueprint, request, jsonify, abort
 from services.prediction import predict
 from utils.security import require_api_key
 from services.xyp import Service
 predict_bp = Blueprint("predict", __name__)
-from config import ACCESS_TOKEN, KEY_PATH
-from zeep.helpers import serialize_object
-from datetime import datetime 
-from utils.transformers import fuel_values 
 # Example GET route with hardcoded features
+
+
 @predict_bp.route("/predict", methods=["GET"])
 # @require_api_key()
 def predict_get():
@@ -34,6 +36,8 @@ def predict_get():
         abort(500, description=str(e))
 
 # POST route that takes input from client
+
+
 @predict_bp.route("/predict/car", methods=["POST"])
 # @require_api_key()
 def predict_post():
@@ -42,30 +46,33 @@ def predict_post():
         if not body:
             abort(400, description="Invalid or missing JSON body")
         print(body.get('num'))
-        vehicle =getVehicle(body.get('num'))
+        vehicle = getVehicle(body.get('num'))
+        milleage, drive, gearbox = body.get(
+            'milleage'), body.get('drive'), body.get('gearbox')
         print(vehicle)
-        
-     
-        brand, mark,  buildYear = vehicle.get('markName'), vehicle.get('modelName'),  vehicle.get('buildYear')
-        importedDate = datetime.strptime(str(vehicle.get('importDate')), '%Y-%m-%d %H:%M:%S%z').year
-        khurd = 'Буруу' if vehicle.get('wheelPosition') == 'Баруун' else 'Зөв' 
+
+        brand, mark,  buildYear = vehicle.get('markName'), vehicle.get(
+            'modelName'),  vehicle.get('buildYear')
+        importedDate = datetime.strptime(
+            str(vehicle.get('importDate')), '%Y-%m-%d %H:%M:%S%z').year
+        khurd = 'Буруу' if vehicle.get('wheelPosition') == 'Баруун' else 'Зөв'
         color = vehicle.get('colorName')
-        capacity = round(float(str(vehicle.get('capacity')))/ 1000, 1) 
+        capacity = round(float(str(vehicle.get('capacity'))) / 1000, 1)
         engine = fuel_values(vehicle.get('fueltype'))
         features = {
             'brand': brand,
             'mark': mark,
-            'Engine_capacity':capacity ,
+            'Engine_capacity': capacity,
             'Year_of_manufacture': buildYear,
             'Year_of_entry': importedDate,
-            'Gearbox': None,
+            'Gearbox': gearbox,
             'Hurd': khurd,
             'Type': None,
             'Color': color,
             'Engine': engine,
             'Interior_color': None,
-            'Drive': None,
-            'Mileage': None,
+            'Drive': drive,
+            'Mileage': milleage,
             'Conditions': None
         }
         print(features)
@@ -78,11 +85,13 @@ def predict_post():
         abort(500, description=str(e))
 
 # @predict_bp.route("/predict/vehicle", methods=["POST"])
+
+
 def getVehicle(arg: str = ''):
     body = request.get_json()
     if not body:
         abort(400, description="Invalid or missing JSON body")
-    
+
     arg = body.get('num')
     if not arg:
         abort(400, description="Missing `num` field")
@@ -98,7 +107,6 @@ def getVehicle(arg: str = ''):
             params.update({'plateNumber': arg})
         else:
             params.update({'certificateNumber': arg})
-
 
         # ACCESS_TOKEN, KEY_PATH - үнэн эсэхийг шалгах
         if not ACCESS_TOKEN or not KEY_PATH:
