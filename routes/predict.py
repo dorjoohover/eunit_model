@@ -84,7 +84,20 @@ def predict_post():
         print(e)
         abort(500, description=str(e))
 
-# @predict_bp.route("/predict/vehicle", methods=["POST"])
+
+@predict_bp.route("/vehicle", methods=["POST"])
+def vehicle():
+    try:
+        body = request.get_json()
+        if not body:
+            abort(400, description="Invalid or missing JSON body")
+        vehicle = getVehicle(body.get('num'))
+
+        return jsonify({"vehicle": vehicle}), 200
+
+    except Exception as e:
+        print(e)
+        abort(500, description=str(e))
 
 
 def getVehicle(arg: str = ''):
