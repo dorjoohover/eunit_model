@@ -1,3 +1,4 @@
+import re
 def indexOfNumber(text):
     match = re.search(r'\d', text)
     if (match):
