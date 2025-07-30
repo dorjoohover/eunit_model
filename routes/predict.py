@@ -6,6 +6,7 @@ from flask import Blueprint, request, jsonify, abort
 from services.prediction import predict
 from utils.security import require_api_key
 from services.xyp import Service
+from services.normalize import normalize_mark
 predict_bp = Blueprint("predict", __name__)
 # Example GET route with hardcoded features
 
@@ -50,7 +51,7 @@ def predict_post():
         milleage, drive, gearbox = body.get(
             'milleage'), body.get('drive'), body.get('gearbox')
         print(vehicle)
-
+        vin = vehicle.get('cabinNumber')
         brand, mark,  buildYear = vehicle.get('markName'), vehicle.get(
             'modelName'),  vehicle.get('buildYear')
         importedDate = datetime.strptime(
@@ -59,9 +60,10 @@ def predict_post():
         color = vehicle.get('colorName')
         capacity = round(float(str(vehicle.get('capacity'))) / 1000, 1)
         engine = fuel_values(vehicle.get('fueltype'))
+        normalized = normalize_mark(brand, mark, vin)
         features = {
             'brand': brand,
-            'mark': mark,
+            'mark': normalized,
             'Engine_capacity': capacity,
             'Year_of_manufacture': buildYear,
             'Year_of_entry': importedDate,
