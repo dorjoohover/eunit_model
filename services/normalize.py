@@ -5,7 +5,12 @@ def indexOfNumber(text):
     else:
         return -1
 
+def normalize_brand(brand):
 
+    if brand.lower() == "great wall":
+        return "Haval"
+
+    return brand.capitalize()
 def normalize_mark(brand: str, mark: str, vin: str = "") -> str:
     brand = brand.lower().strip()
     mark_clean = mark.upper().replace("-", " ").strip()
