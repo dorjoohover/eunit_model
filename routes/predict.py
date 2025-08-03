@@ -109,9 +109,9 @@ def pro():
         body = request.get_json()
         if not body:
             abort(400, description="Invalid or missing JSON body")
-        property = getPropertyInfo(body.get('property'))
+        p = getPropertyInfo(body.get('property'))
 
-        return jsonify({"property": property}), 200
+        return jsonify({"property": p}), 200
 
     except Exception as e:
         print(e)
