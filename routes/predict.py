@@ -184,7 +184,7 @@ def getPropertyInfo(arg: str = '', reg: str = ''):
             return jsonify({"error": "ACCESS_TOKEN or KEY_PATH is missing"}), 500
         print(params)
         citizen = Service(
-            'https://xyp.gov.mn/property-1.3.0/ws?WSDL',
+            'https://xyp.gov.mn/property-1.3.1/ws?WSDL',
             ACCESS_TOKEN,
             KEY_PATH
         )
