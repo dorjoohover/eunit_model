@@ -160,13 +160,13 @@ def getVehicle(arg: str = ''):
 
 
 def getPropertyInfo(arg: str = ''):
-    body = request.get_json()
-    if not body:
-        abort(400, description="Invalid or missing JSON body")
+    # body = request.get_json()
+    # if not body:
+    #     abort(400, description="Invalid or missing JSON body")
 
-    arg = body.get('property')
-    if not arg:
-        abort(400, description="Missing `property` field")
+    # arg = body.get('property')
+    # if not arg:
+    #     abort(400, description="Missing `property` field")
 
     try:
         params = {
