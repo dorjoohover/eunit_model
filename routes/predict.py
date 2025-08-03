@@ -102,7 +102,7 @@ def vehicle():
         print(e)
         abort(500, description=str(e))
 @predict_bp.route("/property", methods=["POST"])
-def property():
+def pro():
     try:
         body = request.get_json()
         if not body:
