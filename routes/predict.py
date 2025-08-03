@@ -101,7 +101,9 @@ def vehicle():
     except Exception as e:
         print(e)
         abort(500, description=str(e))
-@predict_bp.route("/property/get", methods=["POST"])
+        
+        
+@predict_bp.route("/property", methods=["POST"])
 def pro():
     try:
         body = request.get_json()
@@ -162,9 +164,9 @@ def getPropertyInfo(arg: str = ''):
     if not body:
         abort(400, description="Invalid or missing JSON body")
 
-    arg = body.get('num')
+    arg = body.get('property')
     if not arg:
-        abort(400, description="Missing `num` field")
+        abort(400, description="Missing `property` field")
 
     try:
         params = {
