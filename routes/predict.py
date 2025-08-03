@@ -187,7 +187,8 @@ def getPropertyInfo(arg: str = ''):
             KEY_PATH
         )
         print(citizen)
-        res = citizen.dump('WS100201_getPropertyInfo', params).response
+        res = citizen.dump('WS100201_getPropertyInfo', params)
+        print(res)
         res_dict = serialize_object(res)
         print(res_dict.__dict__)
         return res_dict
