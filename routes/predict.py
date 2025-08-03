@@ -175,10 +175,11 @@ def getPropertyInfo(arg: str = ''):
         }
         params.update({"propertyNumber": arg})
 
+        print(params)
         # ACCESS_TOKEN, KEY_PATH - үнэн эсэхийг шалгах
         if not ACCESS_TOKEN or not KEY_PATH:
             return jsonify({"error": "ACCESS_TOKEN or KEY_PATH is missing"}), 500
-
+        print(params)
         citizen = Service(
             'https://xyp.gov.mn/property-1.3.0/ws?WSDL',
             ACCESS_TOKEN,
