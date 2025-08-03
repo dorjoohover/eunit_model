@@ -120,7 +120,7 @@ def pro():
         print(e)
         abort(500, description=str(e))
 @predict_bp.route("/property/list", methods=["POST"])
-def pro():
+def prolist():
     try:
         body = request.get_json()
         if not body:
