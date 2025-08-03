@@ -119,7 +119,7 @@ def pro():
     except Exception as e:
         print(e)
         abort(500, description=str(e))
-@predict_bp.route("/property_list", methods=["POST"])
+@predict_bp.route("/property/list", methods=["POST"])
 def pro():
     try:
         body = request.get_json()
