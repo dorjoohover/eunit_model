@@ -101,7 +101,7 @@ def vehicle():
     except Exception as e:
         print(e)
         abort(500, description=str(e))
-@predict_bp.route("/property", methods=["POST"])
+@predict_bp.route("/property/get", methods=["POST"])
 def pro():
     try:
         body = request.get_json()
