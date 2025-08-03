@@ -109,8 +109,7 @@ def pro():
         body = request.get_json()
         if not body:
             abort(400, description="Invalid or missing JSON body")
-        print(body.get('property'))
-        p = getPropertyInfo(body.get('property'))
+        p = getPropertyInfo(body.get('property'), body.get('regnum'))
 
         return jsonify({"property": p}), 200
 
@@ -160,7 +159,7 @@ def getVehicle(arg: str = ''):
         return jsonify({"error": str(e)}), 500
 
 
-def getPropertyInfo(arg: str = ''):
+def getPropertyInfo(arg: str = '', reg: str = ''):
     # body = request.get_json()
     # if not body:
     #     abort(400, description="Invalid or missing JSON body")
@@ -172,9 +171,9 @@ def getPropertyInfo(arg: str = ''):
     try:
         params = {
             "auth": None,
-            "regnum": None,
         }
         params.update({"propertyNumber": arg})
+        params.update({"regnum": reg})
 
         print(params)
         # ACCESS_TOKEN, KEY_PATH - үнэн эсэхийг шалгах
