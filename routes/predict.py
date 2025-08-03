@@ -101,6 +101,19 @@ def vehicle():
     except Exception as e:
         print(e)
         abort(500, description=str(e))
+@predict_bp.route("/property", methods=["POST"])
+def property():
+    try:
+        body = request.get_json()
+        if not body:
+            abort(400, description="Invalid or missing JSON body")
+        property = getPropertyInfo(body.get('property'))
+
+        return jsonify({"property": property}), 200
+
+    except Exception as e:
+        print(e)
+        abort(500, description=str(e))
 
 
 def getVehicle(arg: str = ''):
@@ -135,6 +148,42 @@ def getVehicle(arg: str = ''):
         )
         print(citizen)
         res = citizen.dump('WS100401_getVehicleInfo', params).response
+        res_dict = serialize_object(res)
+        print(res_dict)
+        return res_dict
+
+    except Exception as e:
+        print("getVehicle error:", str(e))
+        return jsonify({"error": str(e)}), 500
+
+
+def getPropertyInfo(arg: str = ''):
+    body = request.get_json()
+    if not body:
+        abort(400, description="Invalid or missing JSON body")
+
+    arg = body.get('num')
+    if not arg:
+        abort(400, description="Missing `num` field")
+
+    try:
+        params = {
+            "auth": None,
+            "regnum": None,
+        }
+        params.update({"propertyNumber": arg})
+
+        # ACCESS_TOKEN, KEY_PATH - үнэн эсэхийг шалгах
+        if not ACCESS_TOKEN or not KEY_PATH:
+            return jsonify({"error": "ACCESS_TOKEN or KEY_PATH is missing"}), 500
+
+        citizen = Service(
+            'https://xyp.gov.mn/property-1.3.0/ws?WSDL',
+            ACCESS_TOKEN,
+            KEY_PATH
+        )
+        print(citizen)
+        res = citizen.dump('WS100201_getPropertyInfo', params).response
         res_dict = serialize_object(res)
         print(res_dict)
         return res_dict
